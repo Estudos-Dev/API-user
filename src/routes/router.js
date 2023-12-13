@@ -1,15 +1,12 @@
 const express = require('express')
 const router = express.Router();
-const listUsers = require('../service/userService')
+const userController = require('../controllers/userController')
 
-router.get('/users', async(req, res) =>{
-    try{
-        const users = await listUsers;
-        res.status(200).json(users);
-    }catch(error){
-        console.log(error);
-        res.status(404).send('erro ao acahar os usuarios.')
-    }
-})
+const url = '/users/'
+router.get(`${url}`, userController.listUsers);
+router.get(`${url}:id`, userController.listUserById);
 
+router.post(`${url}`, userController.createUser);
+router.put(`${url}:id`, userController.updateUser);
+router.delete(`${url}:id`, userController.removeUser);
 module.exports = router;

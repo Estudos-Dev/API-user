@@ -1,12 +1,31 @@
-const getUsers = require('../controllers/userController')
+const userRepository = require('../repository/userRepository');
 
-async function listUsers(){
-    try{
-        const results = await getUsers();
-        return JSON.parse(results);
-    }catch(error){
-        console.log("Erro ao obter o usuário.");
-    }
+const list = () =>{
+    return userRepository.getUsers();
 }
 
-module.exports = listUsers();
+const listById = (id) => {
+    return userRepository.getUserById(id);
+}
+
+const create = (body) => {
+    return userRepository.createUser(body);
+}
+
+const update = (body) => {
+    const id = body.id;
+    console.log(body);
+    return userRepository.updateUser(id, body);
+}
+
+const remove = (id) =>{
+    return userRepository.removeUser(id);
+}
+
+module.exports = {
+    list,
+    listById,
+    create,
+    update,
+    remove
+}
